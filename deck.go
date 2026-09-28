@@ -13,6 +13,7 @@ import (
 // which is a slice of strings
 type deck []string
 
+// some sort of OOPish construct
 func newDeck() deck {
 	cards := deck{}
 
