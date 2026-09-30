@@ -24,11 +24,20 @@ func newDeck() deck {
 }
 
 func (d deck) print() { // receiver function
+
+	fmt.Println("Start print")
+
 	for i, card := range d {
 		fmt.Println(i, card)
 	}
+
+	fmt.Println("End print")
 }
 
 func newCard() string {
 	return "Queen of Hearts"
+}
+
+func deal(d deck, handSize int) (deck, deck) {
+	return d[:handSize], d[handSize:]
 }
