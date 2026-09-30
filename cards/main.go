@@ -3,11 +3,13 @@ package main
 func main() {
 	cards := newDeck()
 
-	cards = append(cards, "Six of Spades")
+	cards.saveToFile("my_cards")
 
-	hand, cards := deal(cards, 2)
+	// cards = append(cards, "Six of Spades")
 
-	hand.print()
+	// hand, cards := deal(cards, 2)
 
-	cards.print()
+	// hand.print()
+
+	// cards.print()
 }
