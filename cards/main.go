@@ -1,9 +1,9 @@
 package main
 
 func main() {
-	cards := newDeck()
+	// cards := newDeck()
 
-	cards.saveToFile("my_cards")
+	// cards.saveToFile("my_cards")
 
 	// cards = append(cards, "Six of Spades")
 
@@ -12,4 +12,8 @@ func main() {
 	// hand.print()
 
 	// cards.print()
+
+	deck := createFromFile("my_cards")
+
+	deck.print()
 }
