@@ -15,5 +15,7 @@ func main() {
 
 	deck := createFromFile("my_cards")
 
+	deck.shuffle()
+
 	deck.print()
 }
