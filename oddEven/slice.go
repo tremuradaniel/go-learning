@@ -21,9 +21,7 @@ func (s slice) iterate() {
 	fmt.Println("Iterating slice...")
 
 	for _, num := range s {
-		remainder := num % 2
-
-		if remainder != 0 {
+		if num%2 != 0 {
 			fmt.Println("num", num, "is odd")
 		} else {
 			fmt.Println("num", num, "is even")
