@@ -24,11 +24,7 @@ func main() {
 		},
 	}
 
-	dan.print()
-
-	danPointer := &dan
-
-	danPointer.updateName("Danielitto")
+	dan.updateName("Danielitto")
 
 	dan.print()
 }
