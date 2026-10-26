@@ -8,23 +8,21 @@ type contact struct {
 }
 
 type person struct {
-	firstName string
-	lastName  string
-	age       int
-	contact   contact
+	firstName   string
+	lastName    string
+	age         int
+	contactInfo contact
 }
 
 func main() {
-	// alex := person{"John", "Doe"}
-	// alex := person{lastName: "John", firstName: "Doe"}
+	dan := person{
+		firstName: "dan",
+		lastName:  "ban",
+		contactInfo: contact{
+			zip:   23123123,
+			email: "test@email.com",
+		},
+	}
 
-	var alex person
-
-	alex.age = 33
-
-	alex.contact.email = "alex.jognson@mail.com"
-
-	fmt.Println(alex)
-
-	fmt.Printf("%+v", alex)
+	fmt.Printf("%+v", dan)
 }
