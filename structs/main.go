@@ -8,21 +8,26 @@ type contact struct {
 }
 
 type person struct {
-	firstName   string
-	lastName    string
-	age         int
-	contactInfo contact
+	firstName string
+	lastName  string
+	age       int
+	contact
 }
 
 func main() {
 	dan := person{
 		firstName: "dan",
 		lastName:  "ban",
-		contactInfo: contact{
+		contact: contact{
 			zip:   23123123,
 			email: "test@email.com",
 		},
 	}
 
-	fmt.Printf("%+v", dan)
+	dan.print()
+
+}
+
+func (p person) print() {
+	fmt.Printf("%+v", p)
 }
