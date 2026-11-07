@@ -176,3 +176,60 @@ default:
  
 **Memory trick:** the arrow points the way the data flows. `ch <- v` pushes into the channel, and `<-ch` pulls out of it.
  
+ ## Await goroutine
+
+ ### sync.WaitGroup
+
+ #### Why use `defer wg.Done()`?
+
+You're right, it works without `defer` in that example. `defer` doesn't change the result there; it's about **safety**, and it only matters once the function gets more complex.
+
+Same thing, without defer
+
+```go
+go func(n int) {
+    fmt.Println("worker", n)
+    wg.Done()           // called manually at the end
+}(i)
+```
+
+In this tiny function, nothing can go wrong between the start and the `Done()` call, so both versions behave identically.
+
+#### Where defer starts to matter
+
+**1. Early returns**
+
+```go
+go func(n int) {
+    if n == 2 {
+        return              // Done() never runs!
+    }
+    fmt.Println("worker", n)
+    wg.Done()
+}(i)
+```
+
+Worker 2 exits early, the counter never reaches 0, and `wg.Wait()` blocks forever (deadlock).
+
+With `defer wg.Done()` at the top, it runs on every exit path, including that early `return`.
+
+**2. Panics**
+
+```go
+go func(n int) {
+    defer wg.Done()         // still runs
+    doRiskyThing()          // might panic
+}(i)
+```
+
+If a panic is recovered somewhere, deferred calls still run. A manual `wg.Done()` at the bottom would be skipped.
+
+**3. Future edits**
+
+Someone adds an `if err != nil { return }` in the middle six months from now. With `defer`, the code stays correct. Without it, you've introduced a hang.
+
+#### Rule of thumb
+
+Put `defer wg.Done()` as the **first line** of the goroutine. That way you can't forget it, and it works no matter how the function exits.
+
+So: not required for correctness in a trivial function, but a good habit because it protects you when the code grows.
