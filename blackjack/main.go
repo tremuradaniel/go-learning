@@ -1,6 +1,7 @@
 package main
 
 import (
+	"blackjack/deck"
 	"fmt"
 	"log"
 	"slices"
@@ -11,6 +12,12 @@ func main() {
 	var w1 string
 	var loop bool = true
 	var allowed_inputs = [2]string{"y", "n"}
+
+	var d = deck.Deck{}
+
+	d.New()
+
+	d.PrintCurrentDeck()
 
 	for loop {
 		fmt.Println("Stop loop[y/n]:")
