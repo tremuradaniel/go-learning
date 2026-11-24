@@ -45,3 +45,7 @@ func (c Card) GetRank() string {
 func (c Card) Print() {
 	fmt.Println(c.rank + " " + c.suite)
 }
+
+func (c Card) GetToDisplay() string {
+	return c.rank + " " + c.suite
+}
