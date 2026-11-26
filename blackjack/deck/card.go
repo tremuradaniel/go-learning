@@ -47,5 +47,5 @@ func (c Card) Print() {
 }
 
 func (c Card) GetToDisplay() string {
-	return c.rank + " " + c.suite
+	return c.rank + c.suite
 }

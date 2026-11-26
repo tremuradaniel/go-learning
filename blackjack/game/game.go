@@ -7,17 +7,23 @@ import (
 	"strings"
 )
 
-type game struct {
-	player HumanPlayer
-	dealer Dealer
-}
-
 const DEFAULT_CARDS_FIRST_DRAWN = 2
+
+const FIRST_DRAW_PHASE = 0
+const PLAYER_PHASE = 1
+const DEALER_PHASE = 2
+
+type game struct {
+	player    HumanPlayer
+	dealer    Dealer
+	gamePhase int
+}
 
 func InitGame() {
 	g := game{
-		player: HumanPlayer{},
-		dealer: *NewDealer(),
+		player:    HumanPlayer{},
+		dealer:    *NewDealer(),
+		gamePhase: FIRST_DRAW_PHASE,
 	}
 	// var d = deck.Deck{}
 
@@ -36,7 +42,7 @@ func run(g *game) bool {
 
 	// startNewGame()
 
-	playRound(g)
+	g.playRound()
 
 	return false
 }
@@ -72,10 +78,35 @@ func startNewGame() {
 	}
 }
 
-func playRound(g *game) {
-	cards := g.dealer.DrawNCards(2)
+func (g *game) playRound() {
+	g.drawFirstCards()
+	g.displayCards(FIRST_DRAW_PHASE)
+	// initial draw stage
+	// player turn
+	// dealer turn
 
-	for _, card := range *cards {
-		card.Print()
+	// for _, card := range *cards {
+	// 	card.Print()
+	// }
+}
+
+func (g *game) drawFirstCards() {
+	g.player.AddCardsToHand(*g.dealer.DrawNCards(DEFAULT_CARDS_FIRST_DRAWN))
+	g.dealer.AddCardsToHand(*g.dealer.DrawNCards(DEFAULT_CARDS_FIRST_DRAWN))
+}
+
+func (g *game) displayCards(phase int) {
+	fmt.Println("Dealer Hand:")
+	fmt.Println(g.dealer.hand.Show(getCardsDisplayedByDealer(phase)))
+
+	fmt.Println("Player Hand:")
+	fmt.Println(g.player.hand.Show(DISPLAY_ALL))
+}
+
+func getCardsDisplayedByDealer(phase int) int {
+	if phase != DEALER_PHASE {
+		return DISPLAY_FIRST_CARD
 	}
+
+	return DISPLAY_ALL
 }

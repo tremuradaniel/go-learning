@@ -41,3 +41,7 @@ func getNewShuffledDeck() *deck.Deck {
 
 	return &d
 }
+
+func (d *Dealer) AddCardsToHand(cards []deck.Card) {
+	d.hand.add(cards)
+}
