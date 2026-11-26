@@ -40,14 +40,18 @@ func InitGame() {
 
 func run(g *game) bool {
 
-	startNewGame()
+	start := startNewGame()
+
+	if !start {
+		return false
+	}
 
 	g.playRound()
 
 	return true
 }
 
-func startNewGame() {
+func startNewGame() bool {
 	var loop = true
 
 	for loop {
@@ -70,13 +74,15 @@ func startNewGame() {
 
 		if w1 == "n" {
 			loop = false
-			return
+			break
 		}
 
 		fmt.Println("number of items read: ", n)
 		fmt.Printf("read line: %s \n", w1)
-		break
+		return true
 	}
+
+	return false
 }
 
 func (g *game) playRound() {
